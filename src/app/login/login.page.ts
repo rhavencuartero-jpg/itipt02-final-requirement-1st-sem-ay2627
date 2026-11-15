@@ -1,24 +1,56 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import type { OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { IonContent, IonIcon } from '@ionic/angular';
+import {
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonRow,
+  IonText,
+} from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { eye, eyeOff, lockClosed, person } from 'ionicons/icons';
+import { albumsOutline, bookOutline, bookmarkOutline, eye, eyeOff, heartCircleOutline, heartOutline, libraryOutline, lockClosed, person } from 'ionicons/icons';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, IonIcon, RouterLink],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    IonButton,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonCol,
+    IonContent,
+    IonGrid,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonRow,
+    IonText,
+  ],
 })
 export class LoginPage implements OnInit {
+  @ViewChild('passwordInput') private passwordInput?: IonInput;
+
   private readonly router = inject(Router);
   username: string = '';
   password: string = '';
-  rememberMe: boolean = false;
   showPassword: boolean = false;
 
   constructor() {
@@ -27,19 +59,26 @@ export class LoginPage implements OnInit {
       lockClosed,
       eye,
       eyeOff,
+      bookOutline,
+      bookmarkOutline,
+      libraryOutline,
+      albumsOutline,
+      heartOutline,
+      heartCircleOutline,
     });
   }
 
   ngOnInit(): void {
     localStorage.removeItem('lmsUserRole');
-    const savedEmail = localStorage.getItem('lmsEmail');
-    if (savedEmail) {
-      this.username = savedEmail;
-    }
   }
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
+  }
+
+  focusPassword(event: Event): void {
+    event.preventDefault();
+    void this.passwordInput?.setFocus();
   }
 
   login(): void {
@@ -77,10 +116,5 @@ export class LoginPage implements OnInit {
 
     localStorage.setItem('lmsUserRole', 'reader');
     this.router.navigate(['/reader_homepage']);
-  }
-
-  forgotPassword(event: Event): void {
-    event.preventDefault();
-    this.router.navigate(['/forgot-password']);
   }
 }
