@@ -7,15 +7,12 @@ import { IonContent } from '@ionic/angular';
 import { loadBorrowRequests, saveBorrowRequests } from '../shared/borrow-requests';
 import type { BorrowRequest } from '../shared/borrow-requests';
 
-type BookFilter = 'All Owned' | 'Recently Added' | 'By Series' | 'Reading Progress' | 'On Sale';
-
 interface HomeBook {
   title: string;
   author: string;
   cover: string;
   description: string;
   rating: string;
-  filters: BookFilter[];
 }
 
 @Component({
@@ -32,15 +29,13 @@ export class ReaderHomepagePage implements OnInit {
   homeRoute = '/reader_homepage';
   acquisitionMessage = '';
   searchTerm = '';
-  activeFilter: BookFilter = 'All Owned';
-  readonly bookFilters: BookFilter[] = ['All Owned', 'Recently Added', 'By Series', 'Reading Progress', 'On Sale'];
   readonly favoriteBooks: HomeBook[] = [
-    { title: 'His Unwritten Promise', author: 'Caleb Reed', cover: 'warm-cover', description: 'A profoundly moving and elegant reimagining of a much loved classic.', rating: '4.6 (15 reviews)', filters: ['All Owned', 'Recently Added', 'By Series', 'Reading Progress'] },
-    { title: 'Dear Future Ex', author: 'Matt Kingly', cover: 'stack-cover', description: 'Between life and death there is a library of infinite second choices.', rating: '4.6 (15 reviews)', filters: ['All Owned', 'Recently Added', 'By Series'] },
+    { title: 'His Unwritten Promise', author: 'Caleb Reed', cover: 'warm-cover', description: 'A profoundly moving and elegant reimagining of a much loved classic.', rating: '4.6 (15 reviews)' },
+    { title: 'Dear Future Ex', author: 'Matt Kingly', cover: 'stack-cover', description: 'Between life and death there is a library of infinite second choices.', rating: '4.6 (15 reviews)' },
   ];
   readonly purchaseBooks: HomeBook[] = [
-    { title: 'How Great Books Go', author: 'Gabrielle Reyes', cover: 'gold-cover', description: 'A new title available for your library.', rating: '4.7 (22 reviews)', filters: ['On Sale'] },
-    { title: 'The Midnight Library', author: 'Matt Haig', cover: 'blue-cover', description: 'A story about the choices that shape a life.', rating: '4.8 (31 reviews)', filters: ['On Sale', 'Reading Progress'] },
+    { title: 'How Great Books Go', author: 'Gabrielle Reyes', cover: 'gold-cover', description: 'A new title available for your library.', rating: '4.7 (22 reviews)' },
+    { title: 'The Midnight Library', author: 'Matt Haig', cover: 'blue-cover', description: 'A story about the choices that shape a life.', rating: '4.8 (31 reviews)' },
   ];
   acquisitionModalOpen = false;
   selectedBookTitle = '';
@@ -100,16 +95,12 @@ export class ReaderHomepagePage implements OnInit {
     this.acquisitionModalOpen = false;
   }
 
-  selectFilter(filter: BookFilter): void {
-    this.activeFilter = filter;
-  }
-
   get visibleFavoriteBooks(): HomeBook[] {
-    return this.filterBooks(this.favoriteBooks);
+    return this.searchBooks(this.favoriteBooks);
   }
 
   get visiblePurchaseBooks(): HomeBook[] {
-    return this.filterBooks(this.purchaseBooks);
+    return this.searchBooks(this.purchaseBooks);
   }
 
   submitAcquisition(): void {
@@ -132,12 +123,8 @@ export class ReaderHomepagePage implements OnInit {
     this.acquisitionMessage = 'Your book request was sent to the admin.';
   }
 
-  private filterBooks(books: readonly HomeBook[]): HomeBook[] {
+  private searchBooks(books: readonly HomeBook[]): HomeBook[] {
     const term = this.searchTerm.trim().toLocaleLowerCase();
-    return books.filter((book) => {
-      const matchesFilter = this.activeFilter === 'All Owned' ? this.favoriteBooks.includes(book) : book.filters.includes(this.activeFilter);
-      const matchesSearch = !term || `${book.title} ${book.author}`.toLocaleLowerCase().includes(term);
-      return matchesFilter && matchesSearch;
-    });
+    return books.filter((book) => !term || `${book.title} ${book.author}`.toLocaleLowerCase().includes(term));
   }
 }

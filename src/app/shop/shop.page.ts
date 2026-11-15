@@ -17,14 +17,11 @@ interface ShopCartItem {
   quantity: number;
 }
 
-type ShopFilter = 'All Available' | 'Recently Added' | 'By Series' | 'Reading Progress' | 'On Sale';
-
 interface ShopBook {
   title: string;
   author: string;
   price: number;
   cover: string;
-  filters: ShopFilter[];
 }
 
 interface WishlistItem {
@@ -50,13 +47,11 @@ export class ShopPage {
   selectedBookTitle = '';
   selectedAuthor = '';
   searchTerm = '';
-  activeFilter: ShopFilter = 'All Available';
-  readonly shopFilters: ShopFilter[] = ['All Available', 'Recently Added', 'By Series', 'Reading Progress', 'On Sale'];
   readonly availableBooks: ShopBook[] = [
-    { title: 'His Unwritten Promise', author: 'Caleb Reed', price: 520, cover: 'warm-cover', filters: ['All Available', 'Recently Added', 'By Series', 'Reading Progress'] },
-    { title: 'Dear Future Ex', author: 'Matt Haig', price: 435, cover: 'stack-cover', filters: ['All Available', 'Recently Added', 'By Series'] },
-    { title: 'How Great Books Go', author: 'Gabrielle Reyes', price: 490, cover: 'gold-cover', filters: ['All Available', 'On Sale'] },
-    { title: 'The Midnight Library', author: 'Matt Kingly', price: 450, cover: 'blue-cover', filters: ['All Available', 'On Sale', 'Reading Progress'] },
+    { title: 'His Unwritten Promise', author: 'Caleb Reed', price: 520, cover: 'warm-cover' },
+    { title: 'Dear Future Ex', author: 'Matt Haig', price: 435, cover: 'stack-cover' },
+    { title: 'How Great Books Go', author: 'Gabrielle Reyes', price: 490, cover: 'gold-cover' },
+    { title: 'The Midnight Library', author: 'Matt Kingly', price: 450, cover: 'blue-cover' },
   ];
   readonly acquisitionBooks = [
     { title: 'The Midnight Library', author: 'Matt Haig' },
@@ -235,17 +230,9 @@ export class ShopPage {
     this.recentlyRemovedWishlistItem = null;
   }
 
-  selectFilter(filter: ShopFilter): void {
-    this.activeFilter = filter;
-  }
-
   get visibleBooks(): ShopBook[] {
     const term = this.searchTerm.trim().toLocaleLowerCase();
-    return this.availableBooks.filter((book) => {
-      const matchesFilter = this.activeFilter === 'All Available' || book.filters.includes(this.activeFilter);
-      const matchesSearch = !term || `${book.title} ${book.author}`.toLocaleLowerCase().includes(term);
-      return matchesFilter && matchesSearch;
-    });
+    return this.availableBooks.filter((book) => !term || `${book.title} ${book.author}`.toLocaleLowerCase().includes(term));
   }
 
   requestAcquisition(): void {

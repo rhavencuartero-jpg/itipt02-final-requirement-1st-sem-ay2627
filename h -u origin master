@@ -1,0 +1,9 @@
+* [33mdc41093[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m finalized the login page
+* [33m1b8b338[m[33m ([m[1;31mupstream/master[m[33m, [m[1;31mupstream/HEAD[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m remove button and reading progress
+* [33mb69f1d2[m wishlist button (undo with toast)
+* [33m8e79183[m side menu, wishlist trashbin, buttons, search
+* [33m2b6c73f[m request acquisition
+* [33mba85f28[m remove cart and add log out
+*   [33m5c87769[m Merge pull request #9 from roxetteeeee/master
+[32m|[m[33m\[m  
+[32m|[m * [33ma456ffc[m book checkout and receipt modal
