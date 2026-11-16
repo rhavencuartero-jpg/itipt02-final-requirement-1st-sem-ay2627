@@ -1,71 +1,87 @@
 
 <ion-content [fullscreen]="true">
-  <div class="login-page">
+  <ion-grid class="login-page">
+    <ion-grid class="login-card-wrap">
+      <ion-grid class="icon-orbit" aria-hidden="true">
+        <ion-icon name="book-outline" class="orbit-icon orbit-icon-one"></ion-icon>
+        <ion-icon name="library-outline" class="orbit-icon orbit-icon-two"></ion-icon>
+        <ion-icon name="bookmark-outline" class="orbit-icon orbit-icon-three"></ion-icon>
+        <ion-icon name="albums-outline" class="orbit-icon orbit-icon-four"></ion-icon>
+        <ion-icon name="heart-outline" class="orbit-icon orbit-icon-five cute-orbit-icon"></ion-icon>
+        <ion-icon name="heart-circle-outline" class="orbit-icon orbit-icon-six cute-orbit-icon"></ion-icon>
+      </ion-grid>
 
-    <h1 class="login-title">Login</h1>
+      <ion-card class="login-card">
+        <ion-card-header>
+          <ion-card-title class="login-title">Login</ion-card-title>
+        </ion-card-header>
 
-    <div class="login-card">
+        <ion-card-content class="login-card-content">
+          <ion-item class="input-box" lines="none">
+            <ion-icon name="person" class="input-icon" slot="start"></ion-icon>
+            <ion-input
+              type="text"
+              placeholder="Username"
+              [(ngModel)]="username"
+              name="username"
+              autocomplete="username"
+              enterkeyhint="next"
+              required
+              (keydown.enter)="focusPassword($event)"
+            ></ion-input>
+          </ion-item>
 
-      <form (ngSubmit)="login()">
+          <ion-item class="input-box" lines="none">
+            <ion-icon name="lock-closed" class="input-icon" slot="start"></ion-icon>
+            <ion-input
+              #passwordInput
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Password"
+              [(ngModel)]="password"
+              name="password"
+              autocomplete="current-password"
+              enterkeyhint="go"
+              required
+              (keydown.enter)="login()"
+            ></ion-input>
+            <ion-button
+              class="visibility-button"
+              fill="clear"
+              slot="end"
+              type="button"
+              aria-label="Toggle password visibility"
+              (click)="togglePassword()"
+            >
+              <ion-icon [name]="showPassword ? 'eye' : 'eye-off'"></ion-icon>
+            </ion-button>
+          </ion-item>
 
-        <!-- Username -->
-        <div class="input-box">
-          <ion-icon name="person" class="input-icon"></ion-icon>
-          <input
-            type="text"
-            placeholder="Username or Email"
-            [(ngModel)]="username"
-            name="username"
-            autocomplete="username"
-            required
-          />
-        </div>
+          <ion-grid class="signup-text">
+            <ion-row>
+              <ion-col class="signup-line">
+                <ion-text class="signup-copy">Don't have an account?</ion-text>
+                <ion-button class="link-button" fill="clear" routerLink="/signup" href="/signup">
+                  Sign Up
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
-        <!-- Password -->
-        <div class="input-box">
-          <ion-icon name="lock-closed" class="input-icon"></ion-icon>
+          <ion-grid class="forgot-text">
+            <ion-row>
+              <ion-col>
+                <ion-button class="link-button" fill="clear" routerLink="/forgot-password" href="/forgot-password">
+                  Forgot Password?
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
 
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            placeholder="Password"
-            [(ngModel)]="password"
-            name="password"
-            autocomplete="current-password"
-            required
-          />
-
-          <ion-icon
-            [name]="showPassword ? 'eye' : 'eye-off'"
-            class="eye-icon"
-            (click)="togglePassword()">
-          </ion-icon>
-        </div>
-
-        <!-- Remember and Forgot -->
-        <div class="options">
-          <label class="remember">
-            <input type="checkbox" [(ngModel)]="rememberMe"
-              name="rememberMe" />
-            <span>Remember Me</span>
-          </label>
-
-          <a href="#" (click)="forgotPassword($event)">
-            Forgot Password?
-          </a>
-        </div>
-
-        <!-- Login Button -->
-        <button type="submit" class="login-button">
-          Log in
-        </button>
-
-        <!-- Sign Up -->
-        <p class="signup-text">
-          Don't have an Account?
-          <a routerLink="/signup">Sign Up</a>
-        </p>
-
-      </form>
-    </div>
-  </div>
+          <ion-button class="login-button" expand="block" type="button" (click)="login()">
+            Log in
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-grid>
+  </ion-grid>
 </ion-content>

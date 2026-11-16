@@ -46,11 +46,7 @@
       <input type="search" placeholder="Search books..." [(ngModel)]="searchTerm" />
     </label>
 
-    <div class="filters">
-      @for (filter of shopFilters; track filter) {
-      <button type="button" [class.selected]="activeFilter === filter" (click)="selectFilter(filter)">{{ filter }}</button>
-      }
-    </div>
+    <h2 class="trending-heading">Trending books now</h2>
 
     <section class="books-heading">
       <h2>📖 &nbsp; Available Books for Reserve</h2>

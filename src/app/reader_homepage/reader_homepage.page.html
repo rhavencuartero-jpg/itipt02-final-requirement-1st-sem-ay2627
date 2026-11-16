@@ -44,11 +44,7 @@
         <input type="search" placeholder="Search books..." aria-label="Search books" [(ngModel)]="searchTerm" />
       </label>
 
-      <div class="filters" aria-label="Book filters">
-        @for (filter of bookFilters; track filter) {
-        <button type="button" [class.selected]="activeFilter === filter" (click)="selectFilter(filter)">{{ filter }}</button>
-        }
-      </div>
+      <h2 class="trending-heading">Trending books now</h2>
 
       <section class="book-section">
         <h2>♥ &nbsp; Favorites</h2>
